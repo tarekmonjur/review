@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<form action="{{url('voting')}}" method="post">
+<form action="{{url('reviews/create')}}" method="post">
 	{{csrf_field()}}
 <div class="container">
 	<div class="row">

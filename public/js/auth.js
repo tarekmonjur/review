@@ -36,7 +36,7 @@ $(document).ready(function () {
                     this.submitDisable = false;
                     if(response.data){
                         this.$common.showMessage(response.data);
-                        setTimeout(function(){window.location.href = this.base_url+'reviews';},500)
+                        setTimeout(function(){window.location.href = this.base_url+'reviews/show';},500)
                     }
                 }).catch(error => {
                         this.$common.loadingHide(0);

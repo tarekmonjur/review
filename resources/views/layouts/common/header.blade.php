@@ -16,27 +16,40 @@
                 <nav class="style-1" id="navigation">
                     <ul id="responsive">
                         @if(!$auth)
-                        <li>
-                            <a href="{{url('/gestionali-erp')}}">Gestionali ERP</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/business-intelligence')}}">Business Intellingence</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/crm')}}">CRM</a>
-                        </li>
-                        @else
-                        <li class="voting-header">
-                            <a href="{{url('/voting')}}">Scrivi una recensione</a>
-
-                        </li>
-                        <li>
-                            <a href="{{url('/reviews')}}">Recensioni
-                                <img class="svg-icon-number1" src="{{url('images/number1.svg')}}">
-                            </a>
-                        </li>
                             <li>
-                                <a href="{{url('/reviews')}}">Aggiornamento del profilo </a>
+                                <a href="{{url('/gestionali-erp')}}">Gestionali ERP</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/business-intelligence')}}">Business Intellingence</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/crm')}}">CRM</a>
+                            </li>
+                        @endif
+
+                        <li>
+                            <a href="{{url('/reviews')}}">Recensioni</a>
+                        </li>
+                        <li>
+                            <a href="{{url('/review')}}">Revisione</a>
+                        </li>
+
+                        @if($auth)
+                            <li>
+                                <a href="{{url('/reviews/show')}}">Recensioni
+                                    <img class="svg-icon-number1" src="{{url('images/number1.svg')}}">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{url('/contacts')}}">Contatti</a>
+                            </li>
+                            @if($auth->user_type == 2)
+                                <li>
+                                    <a href="{{url('/users')}}">Utenti</a>
+                                </li>
+                            @endif
+                            <li>
+                                <a href="{{url('/users/profile')}}">Profilo</a>
                             </li>
                         @endif
                     </ul>
@@ -47,7 +60,7 @@
             <div class="right-side">
                 <div class="header-widget">
                     @if($auth)
-                    <a href="{{url('/profile')}}">
+                    <a href="{{url('/users/profile')}}">
                         <i class="sl sl-icon-user hidden-xs"></i>
                     </a>
                     &nbsp;&nbsp;<a class="button" href="{{url('/logout')}}">LOGOUT</a>&nbsp; &nbsp;

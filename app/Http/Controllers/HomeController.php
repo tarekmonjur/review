@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Review;
+use App\Software;
+use App\Vendor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -59,14 +62,27 @@ class HomeController extends Controller
 
 
     /**
-    * Show the Voting page.
+    * Show the review voting page.
     *
     * @return \Illuminate\Http\Response
     */
-//    public function showVoting(){
-//        return view('public.voting');
-//    }
-//
+    public function showReviewForm(){
+        $data['softwares'] = Software::get();
+        $data['vendors'] = Vendor::get();
+        return view('public.review')->with($data);
+    }
+
+
+    /**
+     * Show the reviews list page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showReview(){
+        $data['reviews'] = Review::with('user','software','vendor')->paginate(15);
+        return view('public.reviews')->with($data);
+    }
+
 
     /**
      * Show the Chi-Siamo page.

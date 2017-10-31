@@ -17,7 +17,8 @@ Route::prefix('/')->group(function(){
     Route::get('/gestionali-erp', 'HomeController@showGestionaliErp');
     Route::get('/business-intelligence', 'HomeController@showBusinessIntelligence');
     Route::get('/crm', 'HomeController@showCRM');
-//    Route::get('/voting', 'HomeController@showVoting');
+    Route::get('/review', 'HomeController@showReviewForm');
+    Route::get('/reviews', 'HomeController@showReview');
     Route::get('/chi-siamo', 'HomeController@showChiSiamo');
 });
 
@@ -45,17 +46,28 @@ Route::prefix('/')->namespace('Auth')->group(function(){
 });
 
 
-/********** ......Dashboard Routes....... *****************/
-Route::prefix('/')->namespace('Dashboard')->group(function(){
-    Route::get('/voting', 'ReviewController@showVoting');
-    Route::post('/voting', 'ReviewController@voting');
-
-    Route::prefix('reviews')->group(function (){
-        Route::get('/', 'ReviewController@index');
-        Route::get('/edit/{id}', 'ReviewController@showReviewEdit');
-        Route::post('/edit', 'ReviewController@reviewUpdate');
-        Route::get('/delete/{id}', 'ReviewController@reviewDelete');
-    });
+/********** ......Review Routes....... *****************/
+Route::prefix('/reviews')->namespace('Dashboard')->group(function(){
+    Route::get('/show', 'ReviewController@index');
+    Route::post('/create', 'ReviewController@createReview');
+    Route::get('/edit/{id}', 'ReviewController@showReviewEdit');
+    Route::post('/edit', 'ReviewController@reviewUpdate');
+    Route::get('/delete/{id}', 'ReviewController@reviewDelete');
+    Route::get('/status/{id}/{status}', 'ReviewController@changeReviewStatus');
 
     Route::any('/import', 'ReviewController@importVendorData');
+});
+
+
+/********** ......User Routes....... *****************/
+Route::prefix('/users')->namespace('Dashboard')->group(function(){
+    Route::get('/', 'UserController@index');
+    Route::get('/profile', 'UserController@showProfile');
+    Route::post('/profile', 'UserController@updateProfile');
+});
+
+
+/********** ......Contact Routes....... *****************/
+Route::prefix('/contacts')->namespace('Dashboard')->group(function(){
+    Route::get('/', 'ContactController@index');
 });

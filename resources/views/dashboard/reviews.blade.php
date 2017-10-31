@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col md-12 breadcum-pg">
                 <h2>Reviews</h2>
-                Home <i aria-hidden="true" class="fa fa-chevron-right"></i> Reviews
+                Home <i aria-hidden="true" class="fa fa-chevron-right"></i> Manage Reviews
             </div>
         </div>
     </div><!--End of breadcrum=-->
@@ -16,6 +16,12 @@
         @if (session('success'))
             <div class="container alert alert-success" style="background: green;padding: 10px;color: white; font-weight: bold">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="container alert alert-danger" style="background: green;padding: 10px;color: white; font-weight: bold">
+                {{ session('error') }}
             </div>
         @endif
         <br>
@@ -68,17 +74,17 @@
                     <td>{{$review->created_at->format('d M Y')}}</td>
                     <td>
                         <a href="{{url('reviews/edit/'.$review->id)}}" class="button" style="padding: 4px 10px!important; font-size: 13px!important;">Edit</a>
-                        <a onclick="return checkDelete('Are you sure delete this review?','{{url('reviews/delete/'.$review->id)}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
+                        <a onclick="return checkDelete('delete','Are you sure delete this review?','{{url('reviews/delete/'.$review->id)}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
                         @if($auth->user_type == 2)
                             @if($review->status == 0)
-                                <a href="#" class="label label-success">Approved</a>
-                                <a href="#" class="label label-danger">Reject</a>
+                                <a onclick="return checkDelete('approved','Are you sure approved this review?','{{url('reviews/status/'.$review->id.'/1')}}')" href="#" class="label label-success">Approved</a>
+                                <a onclick="return checkDelete('reject','Are you sure reject review?','{{url('reviews/status/'.$review->id.'/2')}}')" href="#" class="label label-danger">Reject</a>
                             @elseif($review->status == 1)
-                                <a href="#" class="label label-warning">Pending</a>
-                                <a href="#" class="label label-danger">Reject</a>
+                                <a onclick="return checkDelete('pending','Are you sure pending this review?','{{url('reviews/status/'.$review->id.'/0')}}')" href="#" class="label label-warning">Pending</a>
+                                <a onclick="return checkDelete('reject','Are you sure reject this review?','{{url('reviews/status/'.$review->id.'/2')}}')" href="#" class="label label-danger">Reject</a>
                             @elseif($review->status == 2)
-                                <a href="#" class="label label-warning">Pending</a>
-                                <a href="#" class="label label-success">Approved</a>
+                                <a onclick="return checkDelete('pending','Are you sure pending this review?','{{url('reviews/status/'.$review->id.'/0')}}')" href="#" class="label label-warning">Pending</a>
+                                <a onclick="return checkDelete('approved','Are you sure reject this review?','{{url('reviews/status/'.$review->id.'/1')}}')" href="#" class="label label-success">Approved</a>
                             @endif
                         @endif
                     </td>
@@ -111,7 +117,7 @@
             cursor: pointer!important;
             background-image: none!important;
             border: 1px solid transparent!important;
-            width: 25%!important;
+            width: 30%!important;
             color: white!important;
         }
         .swal2-buttonswrapper .btn-success{
@@ -155,7 +161,7 @@
     </style>
     <script type="text/javascript" src="{{asset('js/sweetalert2.js')}}"></script>
     <script>
-        function checkDelete(message, url){
+        function checkDelete(btn, message, url){
             swal({
                 title: message,
                 text: "You won't be able to revert this!",
@@ -163,7 +169,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#218838',
                 cancelButtonColor: '#c82333',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: 'Yes, '+btn+' it!',
                 cancelButtonText: 'No, cancel!',
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',

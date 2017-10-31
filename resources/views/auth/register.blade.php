@@ -9,7 +9,7 @@
         </div>
     </div>
 </div><!--End of breadcrum=-->
-<!---review page-->
+
 <div class="container" id="signup">
     <form method="post" action="{{url('/signup')}}">
         <input type="hidden" name="user_type" value="1">
@@ -95,8 +95,7 @@
     </form>
     <!--end of form -->
 
-</div>		<!--End of fisrt review-->
-</div><!--end of review page -->
-<!-- Footer
-================================================== -->
+</div>
+</div>
+
 @endsection

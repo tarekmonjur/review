@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Review;
 use App\Software;
 use App\Vendor;
+
+use App\Mail\ReviewStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ReviewController extends Controller
 {
@@ -23,23 +26,16 @@ class ReviewController extends Controller
     public function index()
     {
         if($this->auth->user_type == 2){
-            $data['reviews'] = Review::with('user','software','vendor')->paginate(15);
+            $data['reviews'] = Review::with('user','software','vendor')
+                ->orderBy('id', 'desc')
+                ->paginate(15);
         }else{
-            $data['reviews'] = Review::with('user','software','vendor')->where('user_id',$this->auth->id)->paginate(15);
+            $data['reviews'] = Review::with('user','software','vendor')
+                ->where('user_id',$this->auth->id)
+                ->orderBy('id', 'desc')
+                ->paginate(15);
         }
         return view('dashboard.reviews')->with($data);
-    }
-
-
-    /**
-     * Show the Voting page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showVoting(){
-        $data['softwares'] = Software::get();
-        $data['vendors'] = Vendor::get();
-        return view('dashboard.voting')->with($data);
     }
 
 
@@ -49,7 +45,7 @@ class ReviewController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function voting(Request $request)
+    public function createReview(Request $request)
     {
         $request->validate([
             'software' => 'required',
@@ -84,10 +80,10 @@ class ReviewController extends Controller
             $review->update_score = $request->update_score;
             $review->save();
 
-            $request->session()->flash('success', 'Review has been send.');
-            return redirect('reviews');
+            $request->session()->flash('success', 'Thank you for your review, you will receive an email when the your review will be published.');
+            return redirect('reviews/show');
         }catch(\Exception $e) {
-            $request->session()->flash('error', 'Review not Success.');
+            $request->session()->flash('error', 'Sorry! your review not Success.');
             return redirect()->back();
         }
     }
@@ -104,7 +100,7 @@ class ReviewController extends Controller
         if(!$data['review'] = Review::find($id)){
             return redirect()->back();
         }
-        return view('dashboard.edit_voting')->with($data);
+        return view('dashboard.edit_review')->with($data);
     }
 
 
@@ -148,7 +144,7 @@ class ReviewController extends Controller
             $review->save();
 
             $request->session()->flash('success', 'Review has been updated.');
-            return redirect('reviews');
+            return redirect('reviews/show');
         }catch(\Exception $e) {
             $request->session()->flash('error', 'Review not updated.');
             return redirect()->back();
@@ -169,6 +165,29 @@ class ReviewController extends Controller
             $request->session()->flash('success', 'Review successfully deleted.');
         }catch (\Exception $e){
             $request->session()->flash('danger', 'Review not deleted.');
+        }
+        return redirect()->back();
+    }
+
+
+    /**
+     * Update/Change review status and send mail
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeReviewStatus(Request $request)
+    {
+        if($this->auth->user_type != 2){
+            $request->session()->flash('error', 'You can not access.');
+        }
+        try{
+            Review::where('id', $request->id)->update(['status' =>  $request->status]);
+            $review = Review::with('user')->find($request->id);
+            Mail::to($review->user->email)->send(new ReviewStatus($review));
+            $request->session()->flash('success', 'Review status successfully changed.');
+        }catch(\Exception $e){
+            $request->session()->flash('error', 'Review status not changed.');
         }
         return redirect()->back();
     }
