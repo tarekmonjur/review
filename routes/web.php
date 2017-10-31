@@ -53,7 +53,7 @@ Route::prefix('/reviews')->namespace('Dashboard')->group(function(){
     Route::get('/edit/{id}', 'ReviewController@showReviewEdit');
     Route::post('/edit', 'ReviewController@reviewUpdate');
     Route::get('/delete/{id}', 'ReviewController@reviewDelete');
-    Route::get('/status/{id}/{status}', 'ReviewController@changeReviewStatus');
+    Route::get('/status/{id}/{status}', 'ReviewController@changeReviewStatus')->middleware('admin');
 
     Route::any('/import', 'ReviewController@importVendorData');
 });
@@ -61,7 +61,14 @@ Route::prefix('/reviews')->namespace('Dashboard')->group(function(){
 
 /********** ......User Routes....... *****************/
 Route::prefix('/users')->namespace('Dashboard')->group(function(){
-    Route::get('/', 'UserController@index');
+
+    Route::prefix('/')->middleware('admin')->group(function (){
+        Route::get('/', 'UserController@index');
+        Route::get('/edit/{id}', 'UserController@show');
+        Route::put('/update', 'UserController@update');
+        Route::get('/delete/{id}', 'UserController@destroy');
+    });
+
     Route::get('/profile', 'UserController@showProfile');
     Route::post('/profile', 'UserController@updateProfile');
 });

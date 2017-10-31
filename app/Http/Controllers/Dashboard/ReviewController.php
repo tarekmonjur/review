@@ -100,7 +100,7 @@ class ReviewController extends Controller
         if(!$data['review'] = Review::find($id)){
             return redirect()->back();
         }
-        return view('dashboard.edit_review')->with($data);
+        return view('dashboard.review_edit')->with($data);
     }
 
 
@@ -178,9 +178,6 @@ class ReviewController extends Controller
      */
     public function changeReviewStatus(Request $request)
     {
-        if($this->auth->user_type != 2){
-            $request->session()->flash('error', 'You can not access.');
-        }
         try{
             Review::where('id', $request->id)->update(['status' =>  $request->status]);
             $review = Review::with('user')->find($request->id);

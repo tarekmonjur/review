@@ -27,6 +27,7 @@
                 <th>User Type</th>
                 <th>Email Address</th>
                 <th>Mobile No</th>
+                <th>Verify Email</th>
                 <th>Company Name</th>
                 <th>Gender</th>
                 <th>About</th>
@@ -42,13 +43,14 @@
                     <td>@if($user->user_type == 1) User @elseif($user->user_type ==2) Admin @endif</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->mobile_no}}</td>
+                    <td>@if($user->email_verify == 1) Verified @elseif($user->email_verify == 0) Unverified @endif</td>
                     <td>{{$user->company_name}}</td>
                     <td>{{$user->gender}}</td>
                     <td>{{$user->about or 'No About..'}}</td>
                     <td>{{$user->created_at->format('d M Y')}}</td>
                     <td>
                         <a href="{{url('users/edit/'.$user->id)}}" class="button" style="padding: 4px 10px!important; font-size: 13px!important;">Edit</a>
-                        <a onclick="return checkDelete('Are you sure delete this review?','{{url('users/delete/'.$user->id)}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
+                        <a onclick="return checkDelete('Are you sure delete this user?','{{url('users/delete/'.$user->id)}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
                     </td>
                 </tr>
             @empty
