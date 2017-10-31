@@ -32,23 +32,29 @@ $(document).ready(function () {
 
                     axios.post(this.base_url+'login',this.formData).then(response => {
                         this.$common.loadingHide(0);
-                    this.errors = [];
-                    this.submitDisable = false;
-                    if(response.data){
-                        this.$common.showMessage(response.data);
-                        setTimeout(function(){window.location.href = this.base_url+'reviews/show';},500)
-                    }
-                }).catch(error => {
+                        this.errors = [];
+                        this.submitDisable = false;
+                        if(response.data){
+                            // this.$common.showMessage(response.data);
+                            setTimeout(function(){
+                                if(window.redirect == 'review'){
+                                    window.location.href = this.base_url+'review';
+                                }else {
+                                    window.location.href = this.base_url + 'reviews/show';
+                                }
+                            },500)
+                        }
+                    }).catch(error => {
                         this.$common.loadingHide(0);
-                    this.errors = [];
-                    this.submitDisable = true;
-                    if(error.response.status == 500 && error.response.data.code == 500){
-                        var error = error.response.data;
-                        this.$common.showMessage(error);
-                    }else if(error.response.status == 422){
-                        this.errors = error.response.data.errors;
-                    }
-                });
+                        this.errors = [];
+                        this.submitDisable = true;
+                        if(error.response.status == 500 && error.response.data.code == 500){
+                            var error = error.response.data;
+                            // this.$common.showMessage(error);
+                        }else if(error.response.status == 422){
+                            this.errors = error.response.data.errors;
+                        }
+                    });
                 },
 
 

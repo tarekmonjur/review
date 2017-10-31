@@ -249,7 +249,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
-			<input class="btn3 btn-info" type="submit" value="Invia la tua recensione">
+			@if($auth)
+				<input class="btn3 btn-info" type="submit" value="Invia la tua recensione">
+			@else
+				<a onclick="window.redirect='review'" class="btn3 btn-info popup-with-zoom-anim" href="#sign-in-dialog" style="padding: 15px">Invia la tua recensione</a>
+			@endif
 		</div>
 		<div class="col-md-3 struct">
 			<h5>Anteprima recensione</h5>

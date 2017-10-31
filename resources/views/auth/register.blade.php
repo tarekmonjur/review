@@ -11,6 +11,11 @@
 </div><!--End of breadcrum=-->
 
 <div class="container" id="signup">
+    @if (session('success'))
+        <div class="alert alert-success" style="background: green; padding: 10px;color: white; font-weight: bold">
+            {{ session('success') }}
+        </div>
+    @endif
     <form method="post" action="{{url('/signup')}}">
         <input type="hidden" name="user_type" value="1">
         {{csrf_field()}}

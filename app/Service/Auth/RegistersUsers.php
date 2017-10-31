@@ -3,9 +3,11 @@
 namespace App\Service\Auth;
 
 
+use App\Mail\EmailVerifyMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Mail;
 
 trait RegistersUsers
 {
@@ -31,9 +33,10 @@ trait RegistersUsers
     {
         $this->validator($request->all())->validate();
         if($request->has('signup')) {
-            event(new Registered($user = $this->create($request->all())));
-
-            $this->guard()->login($user);
+//            event(new Registered($user = $this->create($request->all())));
+            $user = $this->create($request->all());
+            Mail::to($user->email)->send(new EmailVerifyMail($user));
+//            $this->guard()->login($user);
             $request->session()->flash('success','Account creato con successo!');
             return $this->registered($request, $user)
                 ?: redirect($this->redirectTo);

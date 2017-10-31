@@ -99,8 +99,8 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        $request->offsetSet('user_status',1);
-        return $request->only($this->username(), 'password', 'user_status');
+        $request->offsetSet('email_verify',1);
+        return $request->only($this->username(), 'password', 'email_verify');
     }
 
     /**
@@ -147,7 +147,7 @@ trait AuthenticatesUsers
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        $errors = [$this->username().'Failed' => trans('auth.failed')];
+        $errors['errors'] = [$this->username() => ['These credentials do not match our records or your account is unverified.']];
 
         if ($request->expectsJson()) {
             return response()->json($errors, 422);

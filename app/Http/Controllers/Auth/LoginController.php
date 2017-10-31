@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Service\Auth\AuthenticatesUsers;
+use App\User;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,15 @@ class LoginController extends Controller
     {
         parent::__construct();
         $this->middleware('guest')->except('logout');
+    }
+
+    public function verifyEmail(Request $request)
+    {
+        $user_id = base64_decode($request->token);
+        $result = User::where('id', $user_id)->where('email_verify', 0)->update(['email_verify' => 1]);
+        if($result){
+            $request->session()->flash('success', 'Your account successfully verified.');
+        }
+        return redirect('signup');
     }
 }
