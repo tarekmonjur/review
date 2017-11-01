@@ -25,13 +25,18 @@
 				<h5>Scegli il gestionale o la tua software house</h5><br>
 			</div>
 
+				<?php
+					$vendor_id = isset($vendor_id)?$vendor_id:old('vendor');
+					$software_id = isset($software_id)?$software_id:old('software');
+				?>
+
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-6 col-xs-12{{ $errors->has('software') ? ' has-error' : '' }}">
 						<select class="vendor" name="software">
 							<option value="">---Select Software---</option>
 							@foreach($softwares as $software)
-								<option value="{{$software->id}}" @if(old('software') == $software->id) selected @endif>{{$software->software_name}}</option>
+								<option value="{{$software->id}}" @if($software_id == $software->id) selected @endif>{{$software->software_name}}</option>
 							@endforeach
 						</select>
 						<span class="has-error">{{$errors->first('software')}}</span>
@@ -40,7 +45,7 @@
 						<select class="vendor" name="vendor">
 							<option value="">---Select Vendor---</option>
 							@foreach($vendors as $vendor)
-								<option value="{{$vendor->id}}" @if(old('software') == $vendor->id) selected @endif>{{$vendor->name}}</option>
+								<option value="{{$vendor->id}}" @if($vendor_id == $vendor->id) selected @endif>{{$vendor->name}}</option>
 							@endforeach
 						</select>
 						<span class="has-error">{{$errors->first('vendor')}}</span>

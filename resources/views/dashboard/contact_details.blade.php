@@ -4,8 +4,9 @@
     <div class="container-fluid breadcum-container-pg">
         <div class="row">
             <div class="col md-12 breadcum-pg">
-                <h2>Contact Messages</h2>
-                Home <i aria-hidden="true" class="fa fa-chevron-right"></i> Manage Contact Messages
+                <h2>Contact Message Details</h2>
+                <h4><strong>Subject:</strong> {{$contact->subject}}</h4>
+                <h4><strong>Message:</strong> {{$contact->description}}</h4>
             </div>
         </div>
         @if (session('success'))
@@ -17,61 +18,55 @@
 
     <div class="container">
         <br>
-        <div class="pull-right">
-            <a href="{{url('contacts/create')}}" class="button" style="padding: 4px 10px!important; font-size: 13px!important;">Send Message</a>
-        </div>
+        <form method="post" action="{{url('contacts/replay')}}">
+            {{csrf_field()}}
+            <input type="hidden" value="{{$contact->id}}" name="id">
+            <input type="hidden" value="{{$contact->user_id}}" name="user_id">
+            <input type="hidden" value="@if($auth->user_type == 2){{$auth->id}}@else{{0}}@endif" name="admin_id">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <textarea name="message" placeholder="Replay Message..." cols="30" rows="5">{{old('message')}}</textarea>
+                    <span style="font-size: 9px;{{ $errors->has('message') ? 'color:red' : '' }}">{{ $errors->first('message')}}</span>
+                </div>
+            </div>
+
+            <div class="pull-left">
+                <button type="submit" class="button" style="padding: 4px 10px!important; font-size: 13px!important; margin-top: 3px;">Replay Message</button>
+            </div>
+        </form>
+        <br>
+        <br>
         <table class="table table-bordered table-hover">
             <thead class="breadcum-container-pg">
             <tr>
                 <th>SL</th>
-                @if($auth->user_type == 1)
-                <th>User Name</th>
-                @endif
-                <th>Status</th>
-                <th>Subject</th>
-                <th>Message</th>
+                <th>Replay Message</th>
+                <th>Replay By</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
-            @forelse ($contacts as $contact)
+            @forelse ($contact->details as $info)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    @if($auth->user_type == 1)
-                    <td>{{$contact->user->full_name}}</td>
-                    @endif
+                    <td>{{$info->description}}</td>
+                    <td>@if($info->admin_id !=0){{$info->admin->full_name}} (Admin) @else{{$info->user->full_name}}@endif</td>
+                    <td>{{$info->created_at->format('d M Y')}}</td>
                     <td>
-                        @if($contact->details->count() > 0)
-                            <label class="label label-warning">Running</label>
-                        @else
-                            <label class="label label-primary">No replay</label>
-                        @endif
-                    </td>
-                    <td><a href="{{url('contacts/'.$contact->id)}}">{{$contact->subject}}</a></td>
-                    <td>
-                        @if($contact->details->count() > 0)
-                            <a href="{{url('contacts/'.$contact->id)}}">{{$contact->latest->description}}</a>
-                        @else
-                            <a href="{{url('contacts/'.$contact->id)}}">{{$contact->description}}</a>
-                        @endif
-                    </td>
-                    <td>{{$contact->created_at->format('d M Y')}}</td>
-                    <td>
-                        {{--<a href="{{url('contacts/'.$contact->id.'/edit')}}" class="button" style="padding: 4px 10px!important; font-size: 13px!important;">Edit</a>--}}
-                        <a onclick="return checkDelete('delete','Are you sure delete this message?','{{url('contacts/'.$contact->id.'/delete')}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
+                        <a onclick="return checkDelete('delete','Are you sure delete this message?','{{url('contacts/'.$info->id.'/delete')}}')" href="#" class="button" style="background: red;padding: 4px 10px!important; font-size: 13px!important;">Delete</a>
                     </td>
                 </tr>
             @empty
                 <tr>
                     <td colspan="13">
-                        <h4>No message available</h4>
+                        <h4>No replay message available</h4>
                     </td>
                 </tr>
             @endforelse
             </tbody>
         </table>
-        {{ $contacts->links('vendor.pagination.default') }}
     </div>
 
 
@@ -110,31 +105,6 @@
         .swal2-buttonswrapper .btn-danger:hover{
             background-color: #DD7469!important;
             border-color: #DD7469!important;
-        }
-
-        .label {
-            display: inline;
-            padding: .2em .6em .3em;
-            font-size: 75%;
-            font-weight: 700;
-            line-height: 1;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: .25em;
-        }
-        .label-warning {
-            background-color: #f0ad4e;
-        }
-        .label-success {
-            background-color: #5cb85c;
-        }
-        .label-danger {
-              background-color: #d9534f;
-        }
-        .label-primary {
-            background-color: #0e91ff;
         }
     </style>
 

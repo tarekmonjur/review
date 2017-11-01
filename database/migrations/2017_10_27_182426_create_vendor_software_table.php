@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVendorSoftwaresTable extends Migration
+class CreateVendorSoftwareTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVendorSoftwaresTable extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_softwares', function (Blueprint $table) {
+        Schema::create('vendor_software', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('vendor_id');
             $table->integer('software_id');
@@ -28,6 +28,6 @@ class CreateVendorSoftwaresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_softwares');
+        Schema::dropIfExists('vendor_software');
     }
 }

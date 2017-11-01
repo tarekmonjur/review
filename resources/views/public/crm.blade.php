@@ -5,14 +5,18 @@
 		<div class="main-search-inner">
 			<div class="container">
 				<div class="row">
+					<form action="{{url('/review')}}">
 					<div class="col-md-12">
 						<h2 class="text-white text-center">Scrivi le migliori recensioni sui software CRM.</h2>
 						<div class="form-group serach-bar">
 							<div class="icon-addon addon-lg">
-								<input class="form-control" id="email" placeholder="Nome del gestionale aziendale o della software house che vuoi recensire" type="text"> <label class="fa fa-search" for="email" rel="tooltip" title="email"></label> <button class=" cerca-button button" onclick="window.location.href='#'">Cerca</button>
+								<input class="form-control" id="search_vendor_software" name="search_vendor_software" placeholder="Nome del gestionale aziendale o della software house che vuoi recensire" type="text">
+								<label class="fa fa-search" for="search_vendor_software" rel="tooltip" title="email"></label>
+								<button class="cerca-button button" type="submit">Cerca</button>
 							</div>
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -66,7 +66,19 @@ class HomeController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showReviewForm(){
+    public function showReviewForm(Request $request){
+        if($request->has('search_vendor_software')){
+            $search_vendor_software = $request->get('search_vendor_software');
+            $vendor =  Vendor::where('name','like','%'.$search_vendor_software.'%')->first();
+            $software =  Software::where('software_name','like','%'.$search_vendor_software.'%')->first();
+            if($vendor){
+                $data['vendor_id'] = $vendor->id;
+            }
+            if($software){
+                $data['software_id'] = $software->id;
+            }
+        }
+//        dd($data);
         $data['softwares'] = Software::get();
         $data['vendors'] = Vendor::get();
         return view('public.review')->with($data);

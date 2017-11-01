@@ -76,5 +76,13 @@ Route::prefix('/users')->namespace('Dashboard')->group(function(){
 
 /********** ......Contact Routes....... *****************/
 Route::prefix('/contacts')->namespace('Dashboard')->group(function(){
-    Route::get('/', 'ContactController@index');
+    Route::get('/', 'ContactController@index'); // show all
+    Route::get('/create', 'ContactController@create'); // create form
+    Route::post('/', 'ContactController@store'); // save
+    Route::post('/replay', 'ContactController@replay'); // replay
+    Route::get('/{id}', 'ContactController@show'); // show single
+    Route::get('/{id}/edit', 'ContactController@edit'); // show edit
+    Route::put('/{id}', 'ContactController@update'); // update
+    Route::get('/{id}/delete', 'ContactController@destroy'); // delete
+
 });
