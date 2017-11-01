@@ -8,7 +8,7 @@
             <div class="left-side">
                 <!-- Logo -->
                 <div id="logo">
-                    <a href="{{url('/')}}"><img alt="" src="{{asset('images/opinionlogo.png')}}"></a>
+                    <a href="@if($auth){{url('/reviews/show')}}@else{{url('/')}}@endif"><img alt="" src="{{asset('images/opinionlogo.png')}}"></a>
                 </div><!-- Mobile Navigation -->
                 <div class="menu-responsive">
                     <i class="fa fa-reorder menu-trigger"></i>
@@ -25,28 +25,35 @@
                             <li>
                                 <a href="{{url('/crm')}}">CRM</a>
                             </li>
-                        @endif
-
-                        <li>
-                            <a href="{{url('/reviews')}}">Recensioni</a>
-                        </li>
-                        <li>
-                            <a href="{{url('/review')}}">Revisione</a>
-                        </li>
-
-                        @if($auth)
                             <li>
-                                <a href="{{url('/reviews/show')}}">Recensioni
-                                    <img class="svg-icon-number1" src="{{url('images/number1.svg')}}">
-                                </a>
+                                <a href="{{url('/reviews')}}">Recensioni</a>
                             </li>
                             <li>
-                                <a href="{{url('/contacts')}}">Contatti</a>
+                                <a href="{{url('/review')}}">Revisione</a>
                             </li>
+                        @else
                             @if($auth->user_type == 2)
-                                <li>
-                                    <a href="{{url('/users')}}">Utenti</a>
-                                </li>
+                            <li>
+                                <a href="{{url('/users')}}">Gestisci Utente</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/reviews/show')}}">Gestisci Le Recensioni</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/contacts')}}">Centro Di Messaggistica</a>
+                            </li>
+                            @endif
+
+                            @if($auth->user_type == 1)
+                            <li>
+                                <a href="{{url('/reviews/show')}}">La Mia Recensione</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/review')}}">Revisione</a>
+                            </li>
+                            <li>
+                                <a href="{{url('/contacts')}}">Centro Di Messaggistica</a>
+                            </li>
                             @endif
                             <li>
                                 <a href="{{url('/users/profile')}}">Profilo</a>
