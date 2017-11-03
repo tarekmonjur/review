@@ -68,7 +68,11 @@
                 <div class="header-widget">
                     @if($auth)
                     <a href="{{url('/users/profile')}}">
-                        <i class="sl sl-icon-user hidden-xs"></i>
+                        @if($auth->photo)
+                            <img src="{{asset('uploads/'.$auth->photo)}}" width="40px" style="margin-top: -20px" alt="">
+                        @else
+                            <i class="sl sl-icon-user hidden-xs"></i>
+                        @endif
                     </a>
                     &nbsp;&nbsp;<a class="button" href="{{url('/logout')}}">LOGOUT</a>&nbsp; &nbsp;
                     @else

@@ -317,26 +317,3 @@ padding-top: 20px;
 /*End of coding simone*/
 
 
-
-/*---------------------------------------
-   FORM ERROR
------------------------------------------*/
-.has-error, .has-error input, .has-error select, .has-error textarea{
-    border-color: #d71410!important;
-    color: #d71410!important;
-    font-size: 12px!important;
-}
-.has-error input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: #d71410!important;
-}
-.has-error input::-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: #d71410!important;
-    opacity:  1;
-}
-.has-error input::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: #d71410!important;
-    opacity:  1;
-}
-.has-error input::-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #d71410!important;
-}

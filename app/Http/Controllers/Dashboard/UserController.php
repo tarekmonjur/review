@@ -94,6 +94,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:100|unique:users,id,'.$request->id,
             'password' => 'nullable|string|min:6|max:50',
             'confirm_password' => 'nullable|string|min:6|max:50|same:password',
+            'photo' => 'nullable|mimes:jpeg,jpg,png,gif|max:3000',
         ]);
 
         try{
@@ -107,6 +108,14 @@ class UserController extends Controller
             if($request->has('password') && $request->password){
                 $user->password = bcrypt($request->password);
             }
+
+            if($request->hasFile('photo')){
+                $image = time().'.'.$request->photo->extension();
+                $upload = public_path('uploads/');
+                $request->photo->move($upload, $image);
+                $user->photo = $image;
+            }
+
             $user->save();
 
             $request->session()->flash('success','Profile successfully updated.');

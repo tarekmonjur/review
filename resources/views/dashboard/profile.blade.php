@@ -18,7 +18,7 @@
 
     @if (session('error'))
         <br>
-        <div class="container alert alert-danger" style="background: green;padding: 10px;color: white; font-weight: bold">
+        <div class="container alert alert-danger" style="background: red;padding: 10px;color: white; font-weight: bold">
             {{ session('error') }}
         </div>
     @endif
@@ -26,7 +26,7 @@
 </div>
 
 <div class="container" id="signup">
-    <form method="post" action="{{url('/users/profile')}}">
+    <form method="post" action="{{url('/users/profile')}}" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{$user->id}}">
         {{csrf_field()}}
 
@@ -77,6 +77,21 @@
                             <label style="margin-bottom: -9px;">Conferma Password</label>
                             <span style="font-size: 9px;{{ $errors->has('confirm_password') ? 'color:red' : '' }}">inserire la password di conferma</span>
                             <input placeholder="Conferma Password" type="password" name="confirm_password" value="{{old('confirm_password')}}">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label style="margin-bottom: -9px;">Profile Picture</label>
+                            <span style="font-size: 9px;{{ $errors->has('photo') ? 'color:red' : '' }}">{{($errors->first('photo'))?:"è richiesta l'immagine del profilo"}}</span>
+                            <input type="file" name="photo">
+                        </div>
+                        <div class="col-md-6">
+                            @if($user->photo)
+                                <img src="{{asset('uploads/'.$user->photo)}}" style="margin-top: 20px" width="100px" alt="">
+                            @else
+                                <img src="{{asset('images/user.png')}}" style="margin-top: 20px" width="80px" alt="">
+                            @endif
                         </div>
                     </div>
                     <hr>

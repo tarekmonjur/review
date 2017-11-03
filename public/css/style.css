@@ -929,7 +929,7 @@ header.fullwidth .container {
 
 .right-side {
 	    float: right;
-    /*width: 25%;*/
+    width: 25%;
     display: inline-block;
     margin-bottom: -26px;
     padding: 20px 0 0 0;
@@ -13189,3 +13189,183 @@ img.mfp-img {
 	#reset a.button:hover { color: #333; background-color: #fff; }
 	
 	@media only screen and (max-width: 1024px) {#style-switcher {display: none;}}
+
+
+
+
+.checkbox1 [type="checkbox"]:not(:checked),
+.checkbox1 [type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+.checkbox1 [type="checkbox"]:not(:checked) + label,
+.checkbox1 [type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 33px;
+    cursor: pointer;
+    padding-top: 1px;
+}
+
+/* checkbox aspect */
+.checkbox1 [type="checkbox"]:not(:checked) + label:before,
+.checkbox1 [type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 33px; height: 33px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+/* checked mark aspect */
+.checkbox1 [type="checkbox"]:not(:checked) + label:after,
+.checkbox1 [type="checkbox"]:checked + label:after {
+    content: '';
+    position: absolute;
+    top: 7.5px;
+    left: 9px;
+    font-size: 20px;
+    line-height: 0.8;
+    color: #d11720;
+    transition: all .2s;
+    box-shadow: none;
+    background: #444444;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+/* checked mark aspect changes */
+.checkbox1 [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+.checkbox1 [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+.checkbox1 [type="checkbox"]:disabled:not(:checked) + label:before,
+.checkbox1 [type="checkbox"]:disabled:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 33px; height: 33px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.checkbox1 [type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+.checkbox1 [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+/* accessibility */
+.checkbox1 [type="checkbox"]:checked:focus + label:before,
+.checkbox1 [type="checkbox"]:not(:checked):focus + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 33px; height: 33px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+
+
+
+.checkbox [type="checkbox"]:not(:checked),
+.checkbox [type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+.checkbox [type="checkbox"]:not(:checked) + label,
+.checkbox [type="checkbox"]:checked + label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    padding-top: 1px;
+}
+
+/* checkbox aspect */
+.checkbox [type="checkbox"]:not(:checked) + label:before,
+.checkbox [type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 23px; height: 23px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+/* checked mark aspect */
+.checkbox [type="checkbox"]:not(:checked) + label:after,
+.checkbox [type="checkbox"]:checked + label:after {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 6px;
+    font-size: 20px;
+    line-height: 0.8;
+    color: #d11720;
+    transition: all .2s;
+    box-shadow: none;
+    background: #444444;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+/* checked mark aspect changes */
+.checkbox [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+.checkbox [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+.checkbox [type="checkbox"]:disabled:not(:checked) + label:before,
+.checkbox [type="checkbox"]:disabled:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 23px; height: 23px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.checkbox [type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+.checkbox [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+/* accessibility */
+.checkbox [type="checkbox"]:checked:focus + label:before,
+.checkbox [type="checkbox"]:not(:checked):focus + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 23px; height: 23px;
+  border: 0px solid #a9a9a9;
+  border-radius: 50%;
+  background: url(../images/bullet.jpg) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.inline-radio {
+    display: -webkit-box!important;
+    margin-top: 0;
+}

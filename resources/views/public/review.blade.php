@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
+<div id="review">
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
@@ -67,20 +68,36 @@
 			<div class="struct">
 				<h5>Il tuo punteggio complessivo per questo software</h5><br>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<div class="radio-blue">
 					<div class="inline-radio voting">
-						<input name='software_score' type='radio' value="1" @if(old('software_score') == '1') checked @endif class="voting">&nbsp;
-						<input name='software_score' type='radio' value="2" @if(old('software_score') == '2') checked @endif class="voting">&nbsp;
-						<input name='software_score' type='radio' value="3" @if(old('software_score') == '3') checked @endif class="voting">&nbsp;
-						<input name='software_score' type='radio' value="4" @if(old('software_score') == '4') checked @endif class="voting">&nbsp;
-						<input name='software_score' type='radio' value="5" @if(old('software_score') == '5') checked @endif class="voting">&nbsp;
+						<div class="checkbox1">
+							<input id="software_score1" :checked="software_score >=1" v-on:click="softwareScore" type='checkbox' value="1" class="voting">
+							<label for="software_score1"></label>
+						</div>
+						<div class="checkbox1">
+							<input id="software_score2" :checked="software_score >=2" v-on:click="softwareScore" type='checkbox' value="2" class="voting">
+							<label for="software_score2"></label>
+						</div>
+						<div class="checkbox1">
+							<input id="software_score3" :checked="software_score >=3" v-on:click="softwareScore" type='checkbox' value="3" class="voting">
+							<label for="software_score3"></label>
+						</div>
+						<div class="checkbox1">
+							<input id="software_score4" :checked="software_score >=4" v-on:click="softwareScore" type='checkbox' value="4" class="voting">
+							<label for="software_score4"></label>
+						</div>
+						<div class="checkbox1">
+							<input id="software_score5" :checked="software_score >=5" v-on:click="softwareScore" type='checkbox' value="5" class="voting">
+							<label for="software_score5"></label>
+						</div>
+						<input type="hidden" :value="software_score" name="software_score">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="redbox">
-					<b>Molto buono</b>
+					<b v-text="software_score_msg"></b>
 				</div>
 			</div>
 			<span class="has-error">{{$errors->first('software_score')}}</span>
@@ -123,18 +140,34 @@
 			</div>
 			<div class="col-md-3">
 				<div class="radio-blue">
-					<div class="inline-radio ">
-						<input name='easy_use_score' value="1" type='radio' @if(old('easy_use_score') == '1') checked @endif >&nbsp;
-						<input name='easy_use_score' value="2" type='radio' @if(old('easy_use_score') == '2') checked @endif >&nbsp;
-						<input name='easy_use_score' value="3" type='radio' @if(old('easy_use_score') == '3') checked @endif >&nbsp;
-						<input name='easy_use_score' value="4" type='radio' @if(old('easy_use_score') == '4') checked @endif >&nbsp;
-						<input name='easy_use_score' value="5" type='radio' @if(old('easy_use_score') == '5') checked @endif >&nbsp;
+					<div class="inline-radio">
+						<div class="checkbox">
+							<input id="easy_use_score_1" :checked="easy_use_score >=1" v-on:click="easyUseScore" type='checkbox' value="1">
+							<label for="easy_use_score_1"></label>
+						</div>
+						<div class="checkbox">
+							<input  id="easy_use_score_2" :checked="easy_use_score >=2" v-on:click="easyUseScore" type='checkbox' value="2">
+							<label for="easy_use_score_2"></label>
+						</div>
+						<div class="checkbox">
+							<input  id="easy_use_score_3" :checked="easy_use_score >=3" v-on:click="easyUseScore" type='checkbox' value="3">
+							<label for="easy_use_score_3"></label>
+						</div>
+						<div class="checkbox">
+							<input  id="easy_use_score_4" :checked="easy_use_score >=4" v-on:click="easyUseScore" type='checkbox' value="4">
+							<label for="easy_use_score_4"></label>
+						</div>
+						<div class="checkbox">
+							<input id="easy_use_score_5" :checked="easy_use_score >=5" v-on:click="easyUseScore" type='checkbox' value="5">
+							<label for="easy_use_score_5"></label>
+						</div>
+						<input type="hidden" :value="easy_use_score" name="easy_use_score">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="redbox">
-					<b>Vota ora!</b>
+					<b v-text="easy_use_score_msg"></b>
 				</div>
 			</div>
 		</div>
@@ -152,17 +185,33 @@
 			<div class="col-md-3">
 				<div class="radio-blue">
 					<div class="inline-radio">
-						<input name='implementation_score' type='radio' value="1" @if(old('implementation_score') == '1') checked @endif>&nbsp;
-						<input name='implementation_score' type='radio' value="2" @if(old('implementation_score') == '2') checked @endif>&nbsp;
-						<input name='implementation_score' type='radio' value="3" @if(old('implementation_score') == '3') checked @endif>&nbsp;
-						<input name='implementation_score' type='radio' value="4" @if(old('implementation_score') == '4') checked @endif>&nbsp;
-						<input name='implementation_score' type='radio' value="5" @if(old('implementation_score') == '5') checked @endif>&nbsp;
+						<div class="checkbox">
+							<input id="implementation_score_1" :checked="implementation_score >=1" v-on:click="implementationScore" type='checkbox' value="1">
+							<label for="implementation_score_1"></label>
+						</div>
+						<div class="checkbox">
+							<input id="implementation_score_2" :checked="implementation_score >=2" v-on:click="implementationScore" type='checkbox' value="2">
+							<label for="implementation_score_2"></label>
+						</div>
+						<div class="checkbox">
+							<input id="implementation_score_3" :checked="implementation_score >=3" v-on:click="implementationScore" type='checkbox' value="3">
+							<label for="implementation_score_3"></label>
+						</div>
+						<div class="checkbox">
+							<input id="implementation_score_4" :checked="implementation_score >=4" v-on:click="implementationScore" type='checkbox' value="4">
+							<label for="implementation_score_4"></label>
+						</div>
+						<div class="checkbox">
+							<input id="implementation_score_5" :checked="implementation_score >=5" v-on:click="implementationScore" type='checkbox' value="5">
+							<label for="implementation_score_5"></label>
+						</div>
+						<input type="hidden" :value="implementation_score" name="implementation_score">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="redbox">
-					<b>Vota ora!</b>
+					<b v-text="implementation_score_msg"></b>
 				</div>
 			</div>
 		</div>
@@ -180,17 +229,33 @@
 			<div class="col-md-3">
 				<div class="radio-blue">
 					<div class="inline-radio">
-						<input name='technical_score' type='radio' value="1" @if(old('technical_score') == '1') checked @endif>&nbsp;
-						<input name='technical_score' type='radio' value="2" @if(old('technical_score') == '2') checked @endif>&nbsp;
-						<input name='technical_score' type='radio' value="3" @if(old('technical_score') == '3') checked @endif>&nbsp;
-						<input name='technical_score' type='radio' value="4" @if(old('technical_score') == '4') checked @endif>&nbsp;
-						<input name='technical_score' type='radio' value="5" @if(old('technical_score') == '5') checked @endif>&nbsp;
+						<div class="checkbox">
+							<input id="technical_score_1" :checked="technical_score >=1" v-on:click="technicalScore" type='checkbox' value="1">
+							<label for="technical_score_1"></label>
+						</div>
+						<div class="checkbox">
+							<input id="technical_score_2" :checked="technical_score >=2" v-on:click="technicalScore" type='checkbox' value="2">
+							<label for="technical_score_2"></label>
+						</div>
+						<div class="checkbox">
+							<input id="technical_score_3" :checked="technical_score >=3" v-on:click="technicalScore" type='checkbox' value="3">
+							<label for="technical_score_3"></label>
+						</div>
+						<div class="checkbox">
+							<input id="technical_score_4" :checked="technical_score >=4" v-on:click="technicalScore" type='checkbox' value="4">
+							<label for="technical_score_4"></label>
+						</div>
+						<div class="checkbox">
+							<input id="technical_score_5" :checked="technical_score >=5" v-on:click="technicalScore" type='checkbox' value="5">
+							<label for="technical_score_5"></label>
+						</div>
+						<input type="hidden" :value="technical_score" name="technical_score">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="redbox">
-					<b>Vota ora!</b>
+					<b v-text="technical_score_msg"></b>
 				</div>
 			</div>
 		</div>
@@ -208,17 +273,34 @@
 			<div class="col-md-3">
 				<div class="radio-blue">
 					<div class="inline-radio">
-						<input name='update_score' type='radio' value="1" @if(old('update_score') == '1') checked @endif >&nbsp;
-						<input name='update_score' type='radio' value="2" @if(old('update_score') == '2') checked @endif >&nbsp;
-						<input name='update_score' type='radio' value="3" @if(old('update_score') == '3') checked @endif >&nbsp;
-						<input name='update_score' type='radio' value="4" @if(old('update_score') == '4') checked @endif >&nbsp;
-						<input name='update_score' type='radio' value="5" @if(old('update_score') == '5') checked @endif >&nbsp;
+						<div class="checkbox">
+							<input id="update_score1" :checked="update_score >=1" v-on:click="updateScore" type='checkbox' value="1">
+							<label for="update_score1"></label>
+						</div>
+						<div class="checkbox">
+							<input id="update_score2" :checked="update_score >=2" v-on:click="updateScore" type='checkbox' value="2">
+							<label for="update_score2"></label>
+						</div>
+						<div class="checkbox">
+							<input id="update_score3" :checked="update_score >=3" v-on:click="updateScore" type='checkbox' value="3">
+							<label for="update_score3"></label>
+						</div>
+						<div class="checkbox">
+							<input id="update_score4" :checked="update_score >=4" v-on:click="updateScore" type='checkbox' value="4">
+							<label for="update_score4"></label>
+						</div>
+						<div class="checkbox">
+							<input id="update_score5" :checked="update_score >=5" v-on:click="updateScore" type='checkbox' value="5">
+							<label for="update_score5"></label>
+						</div>
+
+						<input type="hidden" :value="update_score" name="update_score">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-5">
 				<div class="redbox">
-					<b>Vota ora!</b>
+					<b v-text="update_score_msg"></b>
 				</div>
 			</div>
 		</div>
@@ -267,6 +349,158 @@
 	</div>
 </div><br>
 </form>
-
+</div>
 @endsection
 
+@section('script')
+	<script>
+		new Vue({
+			el: '#review',
+			data:{
+                software_score: null,
+                easy_use_score: null,
+                implementation_score: null,
+                technical_score: null,
+                update_score: null,
+
+                software_score_msg: 'Vota ora!',
+                easy_use_score_msg: 'Vota ora!',
+                implementation_score_msg: 'Vota ora!',
+                technical_score_msg: 'Vota ora!',
+                update_score_msg: 'Vota ora!',
+			},
+
+			methods:{
+			    calAverage(){
+			        if(this.easy_use_score){
+			            var easy_use_score = this.easy_use_score;
+					}else{
+			            var easy_use_score = 0;
+					}
+                    if(this.implementation_score){
+                        var implementation_score = this.implementation_score;
+                    }else{
+                        var implementation_score = 0;
+                    }
+                    if(this.technical_score){
+                        var technical_score = this.technical_score;
+                    }else{
+                        var technical_score = 0;
+                    }
+                    if(this.update_score){
+                        var update_score = this.update_score;
+                    }else{
+                        var update_score = 0;
+                    }
+                    this.software_score = Math.ceil((parseInt(easy_use_score) + parseInt(implementation_score) + parseInt(technical_score) + parseInt(update_score)) / 4);
+					console.log(this.software_score, this.easy_use_score);
+				},
+
+                softwareScore(e){
+                    var item = e.target.value;
+                    this.software_score = item;
+                    if(item == 1){
+                        if(e.target.checked == true){
+                            this.software_score_msg = "E 'stato oops";
+						}else{
+                            this.software_score_msg = "Vota ora!";
+                            this.software_score = null;
+						}
+                    }else if(item == 2){
+                        this.software_score_msg = "Lascia qualcosa per essere desiderato";
+                    }else if(item == 3){
+                        this.software_score_msg = "Non mi ha sorpreso";
+                    }else if(item == 4){
+                        this.software_score_msg = "mi piaceva";
+                    }else if(item == 5){
+                        this.software_score_msg = "It's the best!";
+                    }
+                },
+                easyUseScore(e){
+                    var item = e.target.value;
+                    this.easy_use_score = item;
+                    if(item == 1){
+                        if(e.target.checked == true){
+                            this.easy_use_score_msg = "E 'stato oops";
+                        }else{
+                            this.easy_use_score_msg = "Vota ora!";
+                            this.easy_use_score = null;
+                        }
+                    }else if(item == 2){
+                        this.easy_use_score_msg = "Lascia qualcosa per essere desiderato";
+                    }else if(item == 3){
+                        this.easy_use_score_msg = "Non mi ha sorpreso";
+                    }else if(item == 4){
+                        this.easy_use_score_msg = "mi piaceva";
+                    }else if(item == 5){
+                        this.easy_use_score_msg = "It's the best!";
+                    }
+                    this.calAverage();
+                },
+                implementationScore(e){
+                    var item = e.target.value;
+                    this.implementation_score = item;
+                    if(item == 1){
+                        if(e.target.checked == true){
+                            this.implementation_score_msg = "E 'stato oops";
+                        }else{
+                            this.implementation_score_msg = "Vota ora!";
+                            this.implementation_score = null;
+                        }
+                    }else if(item == 2){
+                        this.implementation_score_msg = "Lascia qualcosa per essere desiderato";
+                    }else if(item == 3){
+                        this.implementation_score_msg = "Non mi ha sorpreso";
+                    }else if(item == 4){
+                        this.implementation_score_msg = "mi piaceva";
+                    }else if(item == 5){
+                        this.implementation_score_msg = "It's the best!";
+                    }
+                    this.calAverage();
+                },
+                technicalScore(e){
+                    var item = e.target.value;
+                    this.technical_score = item;
+                    if(item == 1){
+                        if(e.target.checked == true){
+                            this.technical_score_msg = "E 'stato oops";
+                        }else{
+                            this.technical_score_msg = "Vota ora!";
+                            this.technical_score = null;
+                        }
+                    }else if(item == 2){
+                        this.technical_score_msg = "Lascia qualcosa per essere desiderato";
+                    }else if(item == 3){
+                        this.technical_score_msg = "Non mi ha sorpreso";
+                    }else if(item == 4){
+                        this.technical_score_msg = "mi piaceva";
+                    }else if(item == 5){
+                        this.technical_score_msg = "It's the best!";
+                    }
+                    this.calAverage();
+                },
+                updateScore(e){
+                    var item = e.target.value;
+                    this.update_score = item;
+                    if(item == 1){
+                        if(e.target.checked == true){
+                            this.update_score_msg = "E 'stato oops";
+                        }else{
+                            this.update_score_msg = "Vota ora!";
+                            this.update_score = null;
+                        }
+                    }else if(item == 2){
+                        this.update_score_msg = "Lascia qualcosa per essere desiderato";
+                    }else if(item == 3){
+                        this.update_score_msg = "Non mi ha sorpreso";
+                    }else if(item == 4){
+                        this.update_score_msg = "mi piaceva";
+                    }else if(item == 5){
+						this.update_score_msg = "It's the best!";
+                    }
+                    this.calAverage();
+                }
+			}
+		});
+	</script>
+@endsection
