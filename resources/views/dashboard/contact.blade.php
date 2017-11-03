@@ -30,6 +30,7 @@
                 <th>Status</th>
                 <th>Subject</th>
                 <th>Message</th>
+                <th>Attachment</th>
                 <th>Date</th>
                 <th>Action</th>
             </tr>
@@ -54,6 +55,15 @@
                             <a href="{{url('contacts/'.$contact->id)}}">{{$contact->latest->description}}</a>
                         @else
                             <a href="{{url('contacts/'.$contact->id)}}">{{$contact->description}}</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if($contact->attach)
+                            <a href="{{asset('uploads/attachment/'.$contact->attach)}}" target="_blank">
+                                <img width="60px" src="{{asset('uploads/attachment/'.$contact->attach)}}" alt="">
+                            </a>
+                            @else
+                            No attachment
                         @endif
                     </td>
                     <td>{{$contact->created_at->format('d M Y')}}</td>

@@ -19,8 +19,53 @@ class UserController extends Controller
 
     public function index()
     {
-        $data['users'] = User::paginate(15);
+        $data['users'] = User::orderBy('id', 'desc')->paginate(15);
         return view('dashboard.users')->with($data);
+    }
+
+
+    public function create()
+    {
+        return view('dashboard.user_create');
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|min:3|max:100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'nullable|string|min:6|max:50',
+            'confirm_password' => 'nullable|string|min:6|max:50|same:password',
+            'photo' => 'nullable|mimes:jpeg,jpg,png,gif|max:3000',
+        ]);
+
+        try{
+            $user = new User;
+            $user->full_name = $request->full_name;
+            $user->email = $request->email;
+            $user->gender = $request->gender;
+            $user->mobile_no = $request->mobile_no;
+            $user->company_name = $request->company_name;
+            $user->about = $request->about;
+            if($request->has('password') && $request->password){
+                $user->password = bcrypt($request->password);
+            }
+
+            if($request->hasFile('photo')){
+                $image = time().'.'.$request->photo->extension();
+                $upload = public_path('uploads/');
+                $request->photo->move($upload, $image);
+                $user->photo = $image;
+            }
+
+            $user->save();
+
+            $request->session()->flash('success','User successfully create.');
+        }catch (\Exception $e){
+            $request->session()->flash('error','Sorry! User not create.');
+        }
+        return redirect()->back();
     }
 
 

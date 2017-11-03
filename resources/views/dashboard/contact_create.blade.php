@@ -16,7 +16,7 @@
     </div>
 
     <div class="container">
-        <form method="post" action="{{url('/contacts')}}">
+        <form method="post" action="{{url('/contacts')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" name="admin_id" value="{{$admin_id}}">
             <div class="row">
@@ -52,9 +52,18 @@
                             <div class="col-md-12">
                                 <label style="margin-bottom: -9px;">Message</label>
                                 <span style="font-size: 9px;{{ $errors->has('message') ? 'color:red' : '' }}">{{ $errors->has('message') ? $errors->first('message') : 'message is required'}}</span>
-                                <textarea name="message" placeholder="Message..." cols="30" rows="10">{{old('message')}}</textarea>
+                                <textarea name="message" placeholder="Message..." cols="30" rows="5">{{old('message')}}</textarea>
                             </div>
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label style="margin-bottom: -9px;">Attachment</label>
+                                <span style="font-size: 9px;{{ $errors->has('attach') ? 'color:red' : '' }}">{{ $errors->has('attach') ? $errors->first('attach') : 'Have a attachment?'}}</span>
+                                <input type="file" name="attach">
+                            </div>
+                        </div>
+                        <br>
                     </div>
                 </div>
                 <div class="col-md-2"></div>

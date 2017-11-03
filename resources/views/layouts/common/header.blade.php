@@ -26,7 +26,7 @@
                                 <a href="{{url('/crm')}}">CRM</a>
                             </li>
                             <li>
-                                <a href="{{url('/reviews')}}">Recensioni</a>
+                                <a href="{{url('/reviews')}}">Recensioni <img class="svg-icon-number1" src="images/number1.svg"></a>
                             </li>
                             <li>
                                 <a href="{{url('/review')}}">Revisione</a>
@@ -74,8 +74,9 @@
                             <i class="sl sl-icon-user hidden-xs"></i>
                         @endif
                     </a>
-                    &nbsp;&nbsp;<a class="button" href="{{url('/logout')}}">LOGOUT</a>&nbsp; &nbsp;
+                    &nbsp;<a class="button" href="{{url('/logout')}}">LOGOUT</a>&nbsp;
                     @else
+                        <i class="sl sl-icon-user hidden-xs"></i>
                     <a class="button popup-with-zoom-anim" href="#sign-in-dialog">REGISTRATI</a>&nbsp;
                     @endif
                     <div class="box">

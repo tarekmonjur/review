@@ -59,6 +59,7 @@ class ContactController extends Controller
         $request->validate([
             'subject' => 'required|max:250',
             'message' => 'required',
+            'attach'  => 'nullable|mimes:jpeg,jpg,png,PNG,gif,doc,pdf|max:3000'
         ]);
         try {
             $contact = new Contact;
@@ -66,6 +67,12 @@ class ContactController extends Controller
             $contact->admin_id = $request->admin_id;
             $contact->subject = $request->subject;
             $contact->description = $request->message;
+            if($request->hasFile('attach')){
+                $image = time().'.'.$request->attach->extension();
+                $upload = public_path('uploads/attachment');
+                $request->attach->move($upload, $image);
+                $contact->attach = $image;
+            }
             $contact->save();
             $request->session()->flash('success', 'Your message has been send.');
             return redirect('contacts');
@@ -103,13 +110,22 @@ class ContactController extends Controller
 
     public function replay(Request $request)
     {
-        $request->validate(['message' => 'required']);
+        $request->validate([
+            'message' => 'required',
+            'attach'  => 'nullable|mimes:jpeg,jpg,png,PNG,gif,doc,pdf|max:3000'
+        ]);
         try{
             $contact = new Contact;
             $contact->user_id = $request->user_id;
             $contact->admin_id = $request->admin_id;
             $contact->parent_id = $request->id;
             $contact->description = $request->message;
+            if($request->hasFile('attach')){
+                $image = time().'.'.$request->attach->extension();
+                $upload = public_path('uploads/attachment');
+                $request->attach->move($upload, $image);
+                $contact->attach = $image;
+            }
             $contact->save();
             $request->session()->flash('success', 'Your replay has been send.');
         }catch(\Exception $e){

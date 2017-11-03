@@ -114,7 +114,7 @@
         <div class="row margin-bottom-20">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <input class="button border margin-top-5 login-padding" name="signup" type="submit" value="Registrati">
+                <input class="button border margin-top-5 login-padding" name="signup" type="submit" value="Aggiorna">
             </div>
             <div class="col-md-2"></div>
         </div>

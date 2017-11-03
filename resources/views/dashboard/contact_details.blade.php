@@ -18,7 +18,7 @@
 
     <div class="container">
         <br>
-        <form method="post" action="{{url('contacts/replay')}}">
+        <form method="post" action="{{url('contacts/replay')}}" enctype="multipart/form-data">
             {{csrf_field()}}
             <input type="hidden" value="{{$contact->id}}" name="id">
             <input type="hidden" value="{{$contact->user_id}}" name="user_id">
@@ -26,11 +26,20 @@
 
             <div class="row">
                 <div class="col-md-12">
+                    <label>Message</label>
                     <textarea name="message" placeholder="Replay Message..." cols="30" rows="5">{{old('message')}}</textarea>
                     <span style="font-size: 9px;{{ $errors->has('message') ? 'color:red' : '' }}">{{ $errors->first('message')}}</span>
                 </div>
             </div>
-
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label style="margin-bottom: -9px;">Attachment</label>
+                    <span style="font-size: 9px;{{ $errors->has('attach') ? 'color:red' : '' }}">{{ $errors->has('attach') ? $errors->first('attach') : 'Have a attachment?'}}</span>
+                    <input type="file" name="attach">
+                </div>
+            </div>
+            <br>
             <div class="pull-left">
                 <button type="submit" class="button" style="padding: 4px 10px!important; font-size: 13px!important; margin-top: 3px;">Replay Message</button>
             </div>
@@ -42,6 +51,7 @@
             <tr>
                 <th>SL</th>
                 <th>Replay Message</th>
+                <th>Attachment</th>
                 <th>Replay By</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -52,6 +62,15 @@
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$info->description}}</td>
+                    <td>
+                        @if($contact->attach)
+                            <a href="{{asset('uploads/attachment/'.$contact->attach)}}" target="_blank">
+                                <img width="60px" src="{{asset('uploads/attachment/'.$contact->attach)}}" alt="">
+                            </a>
+                        @else
+                            No attachment
+                        @endif
+                    </td>
                     <td>@if($info->admin_id !=0){{$info->admin->full_name}} (Admin) @else{{$info->user->full_name}}@endif</td>
                     <td>{{$info->created_at->format('d M Y')}}</td>
                     <td>

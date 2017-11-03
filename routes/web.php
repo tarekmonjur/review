@@ -64,6 +64,8 @@ Route::prefix('/users')->namespace('Dashboard')->group(function(){
 
     Route::prefix('/')->middleware('admin')->group(function (){
         Route::get('/', 'UserController@index');
+        Route::get('/create', 'UserController@create');
+        Route::post('/create', 'UserController@store');
         Route::get('/edit/{id}', 'UserController@show');
         Route::put('/update', 'UserController@update');
         Route::get('/delete/{id}', 'UserController@destroy');

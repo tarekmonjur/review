@@ -12,13 +12,16 @@
 
     <!---review page-->
     <div class="container-fluid">
-        <br>
         @if (session('success'))
+            <br>
             <div class="container alert alert-success" style="background: green;padding: 10px;color: white; font-weight: bold">
                 {{ session('success') }}
             </div>
         @endif
         <br>
+        <div class="pull-right">
+            <a href="{{url('users/create')}}" class="button" style="padding: 4px 10px!important; font-size: 13px!important;">Add User</a>
+        </div>
         <table class="table table-bordered table-hover">
             <thead class="breadcum-container-pg">
             <tr>
@@ -27,6 +30,7 @@
                 <th>User Type</th>
                 <th>Email Address</th>
                 <th>Mobile No</th>
+                <th>Photo</th>
                 <th>Verify Email</th>
                 <th>Company Name</th>
                 <th>Gender</th>
@@ -43,6 +47,13 @@
                     <td>@if($user->user_type == 1) User @elseif($user->user_type ==2) Admin @endif</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->mobile_no}}</td>
+                    <td>
+                        @if($user->photo)
+                            <img width="80px" src="{{asset('uploads/'.$user->photo)}}" alt="">
+                        @else
+                            <img width="80px" src="{{asset('images/user.png')}}" alt="">
+                        @endif
+                    </td>
                     <td>@if($user->email_verify == 1) Verified @elseif($user->email_verify == 0) Unverified @endif</td>
                     <td>{{$user->company_name}}</td>
                     <td>{{$user->gender}}</td>
