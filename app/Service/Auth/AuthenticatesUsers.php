@@ -28,7 +28,8 @@ trait AuthenticatesUsers
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        $data['title'] = 'Form Registrazione - Opinion Software';
+        return view('auth.register')->with($data);
     }
 
     /**
@@ -39,9 +40,8 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
-
         if($request->has('login')) {
+            $this->validateLogin($request);
             // If the class is using the ThrottlesLogins trait, we can automatically throttle
             // the login attempts for this application. We'll key this by the username and
             // the IP address of the client making these requests into this application.
@@ -61,6 +61,28 @@ trait AuthenticatesUsers
             $this->incrementLoginAttempts($request);
 
             return $this->sendFailedLoginResponse($request);
+        }
+        elseif($request->has('login_submit'))
+        {
+            $this->validate($request, [
+                'login_email' => 'required|email|string',
+                'login_password' => 'required|string',
+            ]);
+
+            $credentials = [
+                'email' => $request->login_email,
+                'password' => $request->login_password,
+                'email_verify' => 1,
+            ];
+
+            if($this->guard()->attempt($credentials)){
+                return redirect()->intended($this->redirectTo);
+            }else{
+                $errors = ['login_email' => ['These credentials do not match our records or your account is unverified.']];
+                return redirect()->back()
+                    ->withInput($request->only('login_email', 'remember'))
+                    ->withErrors($errors);
+            }
         }
     }
 

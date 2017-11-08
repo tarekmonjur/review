@@ -26,7 +26,7 @@
                                 <a href="{{url('/crm')}}">CRM</a>
                             </li>
                             <li>
-                                <a href="{{url('/reviews')}}">Recensioni <img class="svg-icon-number1" src="images/number1.svg"></a>
+                                <a href="{{url('/reviews')}}">Recensioni <img class="svg-icon-number1" src="{{asset('images/number1.svg')}}"></a>
                             </li>
                             <li>
                                 <a href="{{url('/review')}}">Revisione</a>
@@ -68,6 +68,7 @@
                 <div class="header-widget">
                     @if($auth)
                     <a href="{{url('/users/profile')}}">
+                        <span style="position:absolute;top: -20px;color:red;font-weight: bold;font-size: 17px;">{{$auth->unreadNotifications->count()}}</span>
                         @if($auth->photo)
                             <img src="{{asset('uploads/'.$auth->photo)}}" width="40px" style="margin-top: -20px" alt="">
                         @else
@@ -107,14 +108,18 @@
                         <div class="modal-body margin-body">
                             <h4 style="color: black;
 padding-bottom: 0px;
-line-height: 32px;">Sei già un utente di Opinion Software? Clicca qui e registrati adesso.</h4>
+line-height: 32px;">Registrati ora: e gratis!.</h4>
                             <a href="{{url('/signup')}}">
                                 <div class="email-div">
-                                    <i aria-hidden="true" class="fa fa-envelope fb-white"></i> <span class="fb-span">E-mail</span>
+                                    <i aria-hidden="true" class="fa fa-envelope fb-white"></i> <span class="fb-span">Registrati</span>
                                 </div>
                             </a>
                             <br>
-                            <p class="term hidden-xxs"><a href="#">Per proseguire confermi di accettare la Normativa sulla Privacy, i termini di utilizzo e linee guida.</a></p>
+                            <p class="term hidden-xxs" style="color: black!important;">Per proseguire confermi di accettare la
+                                <a href="#" style="color: #00a2e8!important;">Normativa sulla Privacy,</a>
+                                <a href="#" style="color: #00a2e8!important;">i termini di utilizzo</a>
+                                e <a href="#" style="color: #00a2e8!important;">le linee guida.</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -129,8 +134,9 @@ line-height: 32px;">Sei già un utente di Opinion Software? Clicca qui e registr
                         </div>
                         <form id="login_form" v-on:submit.prevent="login('login_form','login')">
                             <div class="modal-body">
+                                <h3 style="color: black!important;">sei già un membro di Opinione Software?</h3>
                                     <div class="form-group" :class="{'has-error':errors.email}">
-                                        <label for="email">Email Address:
+                                        <label for="email">Indirizzo email:
                                             <input class="input-text" id="email" name="email" type="email"></label>
                                         <span v-if="errors.email" class="has-error" v-text="errors.email[0]"></span>
                                     </div>
@@ -138,13 +144,13 @@ line-height: 32px;">Sei già un utente di Opinion Software? Clicca qui e registr
                                         <label for="password">Password:
                                             <input class="input-text" id="password" name="password" type="password"></label>
                                         <span v-if="errors.password" class="has-error" v-text="errors.password[0]"></span><br>
-                                        <span class="lost_password"><a href="{{url('password/reset')}}">Hai dimenticato la Password?</a></span>
+                                        <span class="lost_password"><a style="color: #00a2e8!important;" href="{{url('password/reset')}}">Password dimenticate?</a></span>
                                     </div>
 
                             </div>
                             <div class="modal-footer">
                                 <div class="form-row">
-                                    <input class="button border margin-top-5 login-padding" name="login" type="submit" value="Login">
+                                    <input style="border-radius: 5px;" class="button border margin-top-5 login-padding" name="login" type="submit" value="Accedi">
                                 </div>
                                 <span class="term hidden-md hidden-lg hidden-sm"><a href="#">Terms and Conditions Apply*</a></span>
                             </div>

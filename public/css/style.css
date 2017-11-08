@@ -268,14 +268,15 @@ box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
 }
 
 .email-div {
-	background-color: #1092ff;
-    width: 90%;
+    background-color: #1092ff;
+    width: 42%;
     height: 40px;
     padding: 7px 20px;
     font-size: medium;
     webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+    border-radius: 5px;
 }
 
 .fb-white {

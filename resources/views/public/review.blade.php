@@ -316,13 +316,13 @@
 		</div>
 	</div>
 </div>
-
+	<br>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="avatar1">
 				<div class="checkbox">
-					<label><input type="checkbox" name="policy" value="1"></label>
+					<label for=""><input type="checkbox" name="policy" value="1" style="position: unset!important; left: 0!important;"></label>
 					<div class="review-ltext">
 						Dichiaro che questa recensione e frutto della mia esperienza, che rappresenta la mila opinione sincera e di non avere relazioni personali o professionali con tale fornitore Non mi sono stati offerti incentivi o pagamenti per scrivere questa recensione. Comprendo che attua una politica o tolleranza uro per le recensioni mendaci. <span class="review-blue">Maggiori informazioni</span>
 					</div>

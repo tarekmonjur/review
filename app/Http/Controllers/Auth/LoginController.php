@@ -42,11 +42,15 @@ class LoginController extends Controller
 
     public function verifyEmail(Request $request)
     {
-        $user_id = base64_decode($request->token);
-        $result = User::where('id', $user_id)->where('email_verify', 0)->update(['email_verify' => 1]);
-        if($result){
-            $request->session()->flash('success', 'Your account successfully verified.');
+        if($request->token) {
+            $user_id = base64_decode($request->token);
+            $result = User::where('id', $user_id)->where('email_verify', 0)->update(['email_verify' => 1]);
+            if ($result) {
+                $request->session()->flash('success', "Your account successfully verified.<br> Thank you for the activation and go to finish your profile.");
+            }
+            return view('auth.signup_complete');
+        }else{
+            return redirect('signup');
         }
-        return redirect('signup');
     }
 }

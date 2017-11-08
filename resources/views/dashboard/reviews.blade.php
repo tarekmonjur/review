@@ -1,4 +1,65 @@
 @extends('layouts.layout')
+
+@section('style')
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{asset('css/sweetalert2.css')}}">
+    <style>
+        .swal2-buttonswrapper .btn{
+            font-size: 12px!important;
+            padding: 7px 14px 8px 14px!important;
+            border-radius: 2px!important;
+            font-weight: bold!important;
+            display: inline-block!important;
+            margin-bottom: 0!important;
+            text-align: center!important;
+            vertical-align: middle!important;
+            cursor: pointer!important;
+            background-image: none!important;
+            border: 1px solid transparent!important;
+            width: 30%!important;
+            color: white!important;
+        }
+        .swal2-buttonswrapper .btn-success{
+            background-color: #239169!important;
+            border-color: #239169!important;
+        }
+        .swal2-buttonswrapper .btn-success:hover{
+            background-color: #289C72!important;
+            border-color: #289C72!important;
+        }
+        .swal2-buttonswrapper .btn-danger{
+            background-color: #D36A5F!important;
+            border-color: #D36A5F!important;
+        }
+        .swal2-buttonswrapper .btn-danger:hover{
+            background-color: #DD7469!important;
+            border-color: #DD7469!important;
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+        }
+        .label-warning {
+            background-color: #f0ad4e;
+        }
+        .label-success {
+            background-color: #5cb85c;
+        }
+        .label-danger {
+            background-color: #d9534f;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <div class="container-fluid breadcum-container-pg">
@@ -25,7 +86,7 @@
             </div>
         @endif
         <br>
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" id="example">
             <thead class="breadcum-container-pg">
                 <tr>
                     <th>SL</th>
@@ -103,63 +164,8 @@
 @endsection
 
 @section('script')
-    <link type="text/css" rel="stylesheet" href="{{asset('css/sweetalert2.css')}}">
-    <style>
-        .swal2-buttonswrapper .btn{
-            font-size: 12px!important;
-            padding: 7px 14px 8px 14px!important;
-            border-radius: 2px!important;
-            font-weight: bold!important;
-            display: inline-block!important;
-            margin-bottom: 0!important;
-            text-align: center!important;
-            vertical-align: middle!important;
-            cursor: pointer!important;
-            background-image: none!important;
-            border: 1px solid transparent!important;
-            width: 30%!important;
-            color: white!important;
-        }
-        .swal2-buttonswrapper .btn-success{
-            background-color: #239169!important;
-            border-color: #239169!important;
-        }
-        .swal2-buttonswrapper .btn-success:hover{
-            background-color: #289C72!important;
-            border-color: #289C72!important;
-        }
-        .swal2-buttonswrapper .btn-danger{
-            background-color: #D36A5F!important;
-            border-color: #D36A5F!important;
-        }
-        .swal2-buttonswrapper .btn-danger:hover{
-            background-color: #DD7469!important;
-            border-color: #DD7469!important;
-        }
-
-        .label {
-            display: inline;
-            padding: .2em .6em .3em;
-            font-size: 75%;
-            font-weight: 700;
-            line-height: 1;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: .25em;
-        }
-        .label-warning {
-            background-color: #f0ad4e;
-        }
-        .label-success {
-            background-color: #5cb85c;
-        }
-        .label-danger {
-            background-color: #d9534f;
-        }
-    </style>
     <script type="text/javascript" src="{{asset('js/sweetalert2.js')}}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script>
         function checkDelete(btn, message, url){
             swal({
@@ -194,6 +200,13 @@
                 }
             })
         }
+
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                "order": [[ 2, "asc" ]],
+                "dom": '<"top"><"bottom"><"clear">'
+            } );
+        } );
     </script>
 @endsection
 

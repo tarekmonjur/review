@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Notifications\CreateReveiw;
 use App\Review;
 use App\Software;
+use App\User;
 use App\Vendor;
 
 use App\Mail\ReviewStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class ReviewController extends Controller
 {
@@ -79,6 +82,10 @@ class ReviewController extends Controller
             $review->technical_score = $request->technical_score;
             $review->update_score = $request->update_score;
             $review->save();
+
+            $users = User::where('user_type',2)->get();
+            $this->auth->notify(new CreateReveiw($review));
+            Notification::send($users, new CreateReveiw($review));
 
             $request->session()->flash('success', 'Thank you for your review, you will receive an email when the your review will be published.');
             return redirect('reviews/show');
@@ -182,6 +189,11 @@ class ReviewController extends Controller
             Review::where('id', $request->id)->update(['status' =>  $request->status]);
             $review = Review::with('user')->find($request->id);
             Mail::to($review->user->email)->send(new ReviewStatus($review));
+
+            $users = User::where('user_type',2)->get();
+            $this->auth->notify(new CreateReveiw($review));
+            Notification::send($users, new CreateReveiw($review));
+
             $request->session()->flash('success', 'Review status successfully changed.');
         }catch(\Exception $e){
             $request->session()->flash('error', 'Review status not changed.');

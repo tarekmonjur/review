@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Review;
+use App\Setting;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,16 +34,19 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'full_name' => 'required|string|min:3|max:100',
+            'first_name' => 'required|string|min:3|max:50',
+            'last_name' => 'required|string|min:3|max:50',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'nullable|string|min:6|max:50',
             'confirm_password' => 'nullable|string|min:6|max:50|same:password',
             'photo' => 'nullable|mimes:jpeg,jpg,png,gif|max:3000',
+            'mobile_no' => 'required|min:10|max:13',
         ]);
 
         try{
             $user = new User;
-            $user->full_name = $request->full_name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->gender = $request->gender;
             $user->mobile_no = $request->mobile_no;
@@ -83,16 +87,19 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'full_name' => 'required|string|min:3|max:100',
+            'first_name' => 'required|string|min:3|max:50',
+            'last_name' => 'required|string|min:3|max:50',
             'email' => 'required|string|email|max:100|unique:users,id,'.$request->id,
             'password' => 'nullable|string|min:6|max:50',
             'confirm_password' => 'nullable|string|min:6|max:50|same:password',
-            'user_type' => 'required'
+            'user_type' => 'required',
+            'mobile_no' => 'required|min:10|max:13',
         ]);
 
         try{
             $user = User::find($request->id);
-            $user->full_name = $request->full_name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->gender = $request->gender;
             $user->mobile_no = $request->mobile_no;
@@ -127,7 +134,7 @@ class UserController extends Controller
 
     public function showProfile()
     {
-        $data['user'] = User::find($this->auth->id);
+        $data['user'] = User::with('setting')->find($this->auth->id);
         return view('dashboard.profile')->with($data);
     }
 
@@ -135,16 +142,19 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'full_name' => 'required|string|min:3|max:100',
+            'first_name' => 'required|string|min:3|max:50',
+            'last_name' => 'required|string|min:3|max:50',
             'email' => 'required|string|email|max:100|unique:users,id,'.$request->id,
             'password' => 'nullable|string|min:6|max:50',
             'confirm_password' => 'nullable|string|min:6|max:50|same:password',
             'photo' => 'nullable|mimes:jpeg,jpg,png,gif|max:3000',
+            'mobile_no' => 'required|min:10|max:13',
         ]);
 
         try{
             $user = User::find($request->id);
-            $user->full_name = $request->full_name;
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->gender = $request->gender;
             $user->mobile_no = $request->mobile_no;
@@ -162,6 +172,22 @@ class UserController extends Controller
             }
 
             $user->save();
+
+            if($setting = Setting::where('user_id', $user->id)->first()){
+                $settings = $setting;
+            }else{
+                $settings = new Setting;
+            }
+
+            $settings->user_id = $user->id;
+            $settings->first_name = isset($request->first_name_privacy)?:0;
+            $settings->last_name = isset($request->last_name_privacy)?:0;
+            $settings->email = isset($request->email_privacy)?:0;
+            $settings->gender = isset($request->gender_privacy)?:0;
+            $settings->mobile_no = isset($request->mobile_no_privacy)?:0;
+            $settings->photo = isset($request->photo_privacy)?:0;
+            $settings->company = isset($request->company_name_privacy)?:0;
+            $settings->save();
 
             $request->session()->flash('success','Profile successfully updated.');
         }catch (\Exception $e){
